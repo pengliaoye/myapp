@@ -1,0 +1,17 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xbsafe.myapp.mapper.UserMapper">
+    <select id="findAll" resultType="User">
+        select id, name, description from tb_users
+    </select>  
+    <select id="findByName" resultType="User">
+    	select id, name, description from tb_users where name = #{name}
+    </select>
+    <insert id="save" parameterType="User">
+    	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+    		select gen_ticket64()
+    	</selectKey>
+    	insert into tb_users(id, name, description) values(#{id}, #{name}, #{description})
+    </insert>
+</mapper>
